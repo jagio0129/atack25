@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<body>
+    
+    <main>
+        <table>
+            <tr>
+                <td class="panel">1</td>
+                <td class="panel">2</td>
+                <td class="panel">3</td>
+                <td class="panel">4</td>
+                <td class="panel">5</td>
+            </tr>
+            <tr>
+                <td class="panel">6</td>
+                <td class="panel">7</td>
+                <td class="panel">8</td>
+                <td class="panel">9</td>
+                <td class="panel">10</td>
+            </tr>
+            <tr>
+                <td class="panel">11</td>
+                <td class="panel">12</td>
+                <td class="panel">13</td>
+                <td class="panel">14</td>
+                <td class="panel">15</td>
+            </tr>
+            <tr>
+                <td class="panel">16</td>
+                <td class="panel">17</td>
+                <td class="panel">18</td>
+                <td class="panel">19</td>
+                <td class="panel">20</td>
+            </tr>
+            <tr>
+                <td class="panel">21</td>
+                <td class="panel">22</td>
+                <td class="panel">23</td>
+                <td class="panel">24</td>
+                <td class="panel">25</td>
+            </tr>
+        </table>
+        <table style="margin-top: 10px;">
+            <tr>
+                <td class="red" style="background-color: #E91E63"></td>
+                <td class="white" style="background-color: #FFFFFF"></td>
+                <td class="green" style="background-color: #2E7D32"></td>
+                <td class="blue" style="background-color: #304FFE"></td>
+                <td class="gray" style="background-color: #ACACAC"></td>
+            </tr>
+        </table>
+    </main>
+    <script>
+        var color = "#ACACAC";
+        $(".panel").on("click",function(){
+            console.log("aa")
+            $(this).css("background-color",color);
+        })
+        
+        $(".red").on("click",()=>{
+            color = "#E91E63"
+        })
+        $(".blue").on("click",()=>{
+            color = "#304FFE"
+        })
+        $(".white").on("click",()=>{
+            color = "#FFFFFF"
+        })
+        $(".green").on("click",()=>{
+            color = "#2E7D32"
+        })
+        $(".gray").on("click",()=>{
+            color = "#ACACAC"
+        })
+    </script>
+    <style>
+        td{
+            text-align: center;
+            font-size: 80px;
+            color: #232323;
+            border: solid 2px #000000;
+            width:200px;
+            height:180px;
+            background-color: #ACACAC;
+        }
+    </style>
+</body>
+</html>
