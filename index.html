@@ -12,91 +12,103 @@
 </head>
 <body>
     <main>
-        <table align="center">
-            <tr>
-                <td id="1" class="panel">1</td>
-                <td id="2" class="panel">2</td>
-                <td id="3" class="panel">3</td>
-                <td id="4" class="panel">4</td>
-                <td id="5" class="panel">5</td>
-            </tr>
-            <tr>
-                <td id="6" class="panel">6</td>
-                <td id="7" class="panel">7</td>
-                <td id="8" class="panel">8</td>
-                <td id="9" class="panel">9</td>
-                <td id="10" class="panel">10</td>
-            </tr>
-            <tr>
-                <td id="11" class="panel">11</td>
-                <td id="12" class="panel">12</td>
-                <td id="13" class="panel">13</td>
-                <td id="14" class="panel">14</td>
-                <td id="15" class="panel">15</td>
-            </tr>
-            <tr>
-                <td id="16" class="panel">16</td>
-                <td id="17" class="panel">17</td>
-                <td id="18" class="panel">18</td>
-                <td id="19" class="panel">19</td>
-                <td id="20" class="panel">20</td>
-            </tr>
-            <tr>
-                <td id="21" class="panel">21</td>
-                <td id="22" class="panel">22</td>
-                <td id="23" class="panel">23</td>
-                <td id="24" class="panel">24</td>
-                <td id="25" class="panel">25</td>
-            </tr>
+        <table style="margin-top: 10px;  width: 50%; display: inline-block; padding-left:  20%; ">
+            <tbody>
+                <tr>
+                    <td id="1" class="panel">1</td>
+                    <td id="2" class="panel">2</td>
+                    <td id="3" class="panel">3</td>
+                    <td id="4" class="panel">4</td>
+                    <td id="5" class="panel">5</td>
+                </tr>
+                <tr>
+                    <td id="6" class="panel">6</td>
+                    <td id="7" class="panel">7</td>
+                    <td id="8" class="panel">8</td>
+                    <td id="9" class="panel">9</td>
+                    <td id="10" class="panel">10</td>
+                </tr>
+                <tr>
+                    <td id="11" class="panel">11</td>
+                    <td id="12" class="panel">12</td>
+                    <td id="13" class="panel">13</td>
+                    <td id="14" class="panel">14</td>
+                    <td id="15" class="panel">15</td>
+                </tr>
+                <tr>
+                    <td id="16" class="panel">16</td>
+                    <td id="17" class="panel">17</td>
+                    <td id="18" class="panel">18</td>
+                    <td id="19" class="panel">19</td>
+                    <td id="20" class="panel">20</td>
+                </tr>
+                <tr>
+                    <td id="21" class="panel">21</td>
+                    <td id="22" class="panel">22</td>
+                    <td id="23" class="panel">23</td>
+                    <td id="24" class="panel">24</td>
+                    <td id="25" class="panel">25</td>
+                </tr>
+            </tbody>
         </table>
-        <table class="select_panel" style="margin-top: 10px;" align="center">
-            <tr>
-                <td id="red" class="setPanel" style="background-color: rgba(233, 30, 99, 0.9)"><span class="count_text" id="red_count">0</span></td>
-                <td id="white" class="setPanel" style="background-color: rgba(255, 255, 255, 0.9)"><span class="count_text" id="white_count">0</span></td>
-                <td id="green" class="setPanel" style="background-color: rgba(46, 125, 50, 0.9)"><span class="count_text" id="green_count">0</span></td>
-                <td id="blue" class="setPanel" style="background-color: rgba(48, 79, 254, 0.9)"><span class="count_text" id="blue_count">0</span></td>
+        <table style="margin-top: 10px; width: 25%; display: inline-block;" >
+            <tbody>
+                <tr>
+                    <td id="red" class="setPanel" style="background-color: rgba(233, 30, 99, 0.9)"><span class="count_text" id="red_count">0</span></td>
+                </tr>
+                <tr>
+                    <td id="white" class="setPanel" style="background-color: rgba(255, 255, 255, 0.9)"><span class="count_text" id="white_count">0</span></td>
+                </tr>
+                <tr>
+                    <td id="green" class="setPanel" style="background-color: rgba(46, 125, 50, 0.9)"><span class="count_text" id="green_count">0</span></td>
+                </tr>
+                <tr>
+                    <td id="blue" class="setPanel" style="background-color: rgba(48, 79, 254, 0.9)"><span class="count_text" id="blue_count">0</span></td>
+                </tr>
             </tr>
-        </table>
-        <table class="select_panel" style="margin-top: 10px;" align="center">
+            </tbody>
+        </table style="display: inline-block;">
+         <table class="select_panel" style="margin-top: 10px;" align="center">
             <tr>
                 <td id="gray" class="setPanel" style="background-color: rgba(172, 172, 172, 0.9)"></td>
+            </tr>
+            <tr>
                 <td id="yellow" class="setPanel" style="background-color: rgba(255, 255, 0, 0.9)"></td>
             </tr>
         </table>
     </main>
     <script>
+        const contains = (num, list) => {
+            for (item of list)  {
+                if (num === item) return true;
+            }
+            return false;
+        }
         class Color {
             constructor() {
                 this.RED = "#E91E63";
                 this.BLUE = "#304FFE";
                 this.WHITE = "#FFFFFF";
                 this.GREEN = "#2E7D32";
+                this.YELLOW = "#FFFF33";
                 this.GRAY =  "#ACACAC";
-                this.YELLOW = "#FFFF00";
             }
         }
-        class Panel {
+        class PanelsMap {
             constructor() {
                 this.COLOR = new Color();
                 this.count = {
-                    RED:0,
-                    BLUE:0,
-                    WHITE:0,
-                    GREEN:0
+                    red:0,
+                    blue:0,
+                    white: 0,
+                    green:0
                 }
                 this.RED = 1;
                 this.BLUE = 2;
                 this.WHITE = 3;
                 this.GREEN = 4;
-                this.GRAY = 5;
                 this.YELLOW = 5;
-                this.SOUTH = 1;
-                this.WEST = 2;
-                this.EAST = 3;
-                this.NE = 4;
-                this.NW = 5;
-                this.SE = 6;
-                this.SW = 7;
+                this.GRAY = -1;
                 this.reset();
                 console.log("include jquery");
                 this.state = 0;
@@ -134,14 +146,28 @@
                 }
                 this.direction = [this.north, this.south, this.west, this.east, this.NE, this.NW, this.SE,  this.SW,  ]
             }
-            click(id) {
+            chance() {
+                let list = []
+                let num1;
+                while (true) {
+                    if (list.length >= 3) break;
+                    num1 = parseInt(Math.random() * 25 + 1);
+                    if (contains(num1, list)) continue;
+                    list.push(num1);
+                }
+                for (let i in list) {
+                    this.onClick(list[i]);
+                }
+               
+
+            }
+            onClick(id) {
                 id = parseInt(id);
                 var temp = [(id - 1) % 5, (id - 1) / 5];
-                if (!(this.map[parseInt(temp[1])][parseInt(temp[0])] === 5 || this.state === 5)) return 
                 this.setMap(parseInt(temp[0]), parseInt(temp[1]), id);
                 this.reverseMap(parseInt(temp[0]), parseInt(temp[1]));
+                this.countMap();
                 this.reset();
-                this.countMap()
             }
             reverseMap(x, y) {
                 if (this.state === this.GRAY) return ; 
@@ -163,6 +189,8 @@
             }
             reset() {
                 this.ans = [false, false, false, false, false, false, false, false];
+                this.supplementList = [];
+                this.supplementResults = [];
             }
             search(x, y) {
                 for (let i = 0; i < this.direction.length; i++) {
@@ -170,7 +198,7 @@
                         let points = this.direction[i](x, y, j);
                         if(this.judge(points[0], points[1])) {
                             if (this.map[points[0]][points[1]] === this.GRAY) break;
-                            if(this.map[points[0]][points[1]] === this.state) {
+                            if (this.map[points[0]][points[1]] === this.state) {
                                 this.ans[i] = true;
                                 break;
                             }
@@ -178,56 +206,88 @@
                     }
                 }   
             }
+
+            supplement(x, y) {
+                for (let i = 0; i  < 5; i++) {
+                    for (let j = 0; j < 5; j++) {
+                        if (this.map[i][j] == this.state) {
+                            this.supplementList.push([j, i]);
+                            continue;
+                        }
+                    }
+                }
+            }
+            supplementSearch() {
+                for (let item of this.supplementList) {
+                    let x = item[0];
+                    let y = item[1];
+                     for (let i = 0; i < this.direction.length; i++) {
+                        let insidePoints = this.direction[i](x, y, 1);
+                        if (!this.judge(insidePoints[0], insidePoints[1]))continue;
+                        if (this.map[insidePoints[0]][insidePoints[1]] === this.GRAY) continue;
+                        for(let j = 2; j < 5; j++) {
+                            let points = this.direction[i](x, y, j);
+                            if(this.judge(points[0], points[1])) {
+                                if (this.map[points[0]][points[1]] === this.GRAY) {
+                                    this.supplementResults.push([points[0], points[1]]);
+                                    break;
+                                }
+                            } else break;
+                        }
+                    }   
+                }
+            }
+            supplementSet(color) {
+                for (let item of this.supplementResults) {
+                    let x = item[1];
+                    let y = item[0];
+                    let id = y * 5 + (x + 1);
+                    let target = document.getElementById(id);
+                    target.style.backgroundColor = color;
+                }
+                
+            }
             judge(x, y) {
                 if (x < 0 || y < 0|| x > 4 || y > 4) return false;
                 else return true;
             }
+
+
+
+
+
             countMap() {
                 Object.keys(this.count).forEach((v)=>{this.count[v] = 0})
                 this.map.forEach((i)=>{
                     i.forEach((j)=>{
-                        this.count.RED   = j == this.RED ? this.count.RED + 1: this.count.RED
-                        this.count.BLUE  = j == this.BLUE ? this.count.BLUE + 1: this.count.BLUE
-                        this.count.WHITE = j == this.WHITE ? this.count.WHITE + 1: this.count.WHITE
-                        this.count.GREEN = j == this.GREEN ? this.count.GREEN + 1: this.count.GREEN
+                        this.count.red   = j == this.red ? this.count.red + 1: this.count.red
+                        this.count.blue  = j == this.blue ? this.count.blue + 1: this.count.blue
+                        this.count.white = j == this.white ? this.count.white + 1: this.count.white
+                        this.count.green = j == this.green ? this.count.green + 1: this.count.green
                     })
                 })
-                $("#red_count").text(this.count.RED)
-                $("#blue_count").text(this.count.BLUE)
-                $("#green_count").text(this.count.GREEN)
-                $("#white_count").text(this.count.WHITE)
+                $("#red_count").text(this.count.red)
+                $("#blue_count").text(this.count.blue)
+                $("#green_count").text(this.count.green)
+                $("#white_count").text(this.count.white)
             }
         }
-        var panel = new Panel();
+        var panel = new PanelsMap();
+        $("#chance").on("click",()=>{
+            // panel.chance();
+        })
         $(".panel").click(function(){
-            panel.click(this.id);
+            panel.supplementSet(panel.COLOR.GRAY);
+            panel.onClick(this.id);
         });
-        
-        $("#red").on("click",()=>{
-            panel.color = panel.COLOR.RED;
-            panel.state = panel.RED;
-        })
-        $("#blue").on("click",()=>{
-            panel.color = panel.COLOR.BLUE;
-            panel.state = panel.BLUE;
-        })
-        $("#white").on("click",()=>{
-            panel.color = panel.COLOR.WHITE;
-            panel.state = panel.WHITE;
-        })
-        $("#green").on("click",()=>{
-            panel.color = panel.COLOR.GREEN;
-            panel.state = panel.GREEN;
-        })
-        $("#gray").on("click",()=>{
-            panel.color = panel.COLOR.GRAY;
-            panel.state = panel.GRAY;
-        })
-        $("#yellow").on("click",()=>{
-            panel.color = panel.COLOR.YELLOW;
-            panel.state = panel.YELLOW;
-        })
         $(".setPanel").click(function() {
+            
+            panel.supplementSet(panel.COLOR.GRAY);
+            panel.reset();
+            $(".setPanel").css({
+                opacity: 0.3,
+                border: "none"
+            });
             const col = $(this).css("background-color").match(/^rgba\((\d+),\s*(\d+),\s*(\d+),\s*(\d+).\s*(\d+)\)$/)
             $(".setPanel").each((i,v)=>{
                 let v_col = $(v).css("background-color").match(/^rgba\((\d+),\s*(\d+),\s*(\d+),\s*(\d+).\s*(\d+)\)$/)
@@ -240,33 +300,60 @@
                 "background-color":"rgba("+col[1]+","+col[2]+","+col[3]+",0.9)",
                 "border":"solid 5px #222222"
             });
+            switch(this.id) {
+                case 'red':
+                    panel.color = panel.COLOR.RED;
+                    panel.state = panel.RED;
+                    break;
+                case 'blue':
+                    panel.color = panel.COLOR.BLUE;
+                    panel.state = panel.BLUE;
+                    break;
+                case 'white':
+                    panel.color = panel.COLOR.WHITE;
+                    panel.state = panel.WHITE;
+                    break;
+                case 'green':
+                    panel.color = panel.COLOR.GREEN;
+                    panel.state = panel.GREEN;
+                    break;
+                case 'yellow':
+                    panel.color = panel.COLOR.YELLOW;
+                    panel.state = panel.YELLOW;
+                    break;
+                case 'gray':
+                    panel.color = panel.COLOR.GRAY;
+                    panel.state = panel.GRAY;
+                    break;
+            }
+            if (panel.map[2][2] === panel.GRAY) {
+                panel.supplementResults = [[2,2]];
+            } else {
+                panel.supplement(2, 2);
+                panel.supplementSearch();
+            }
+            panel.supplementSet(panel.COLOR.YELLOW);
+
         });
 
     </script>
     <style>
-        table{
-            border-spacing: 0;
-            background: black;
+        body {
+            margin: 0;
+
         }
         td {
-            font-weight: bold;
-            border-radius: 10px;
             text-align: center;
-            font-size: 57px;
-            color: #333333;
-            border: solid 5px #000000;
-            width: 200px;
-            height: 150px;
+            font-size: 80px;
+            color: #232323;
+            border: solid 2px #000000;
+            width:200px;
+            height:180px;
             background-color: #ACACAC;
             cursor: pointer;
-            box-sizing: border-box;
         }
         .setPanel {
-            border: none;
-        }
-        .select_panel{
-            border-spacing: 0;
-            background: none;
+            opacity: 0.3;
         }
     </style>
 </body>
