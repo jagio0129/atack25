@@ -67,8 +67,8 @@
                     <td id="blue" class="setPanel" style="background-color: rgba(48, 79, 254, 0.3)"><span class="count_text" id="blue_count">0</span></td>
                 </tr>
                 <tr>
-	                <td id="gray" class="setPanel" style="background-color: rgba(172, 172, 172, 0.9)"></td>
-	            </tr>
+                    <td id="gray" class="setPanel" style="background-color: rgba(172, 172, 172, 0.9)"></td>
+                </tr>
             </tbody>
         </table>
 
@@ -96,7 +96,7 @@
             }
         }
         class PanelsMap {
-            constructor() {
+            constructor(map) {
                 this.COLOR = new Color();
                 this.count = {
                     red:0,
@@ -116,10 +116,35 @@
                 this.state = this.GRAY;
                 this.map = [];
                 this.color = "#ACACAC";
-                for(let i = 0; i < 5; i++) {
-                    this.map[i] = []
-                    for (let j=  0; j < 5; j++) {
-                        this.map[i][j] = this.GRAY;
+                if (map.length != 0) {
+                    for(let i = 0; i < 5; i++) {
+                        this.map[i] = []
+                        for (let j=  0; j < 5; j++) {
+                            switch(map[i][j]) {
+                                case this.GREEN:
+                                    this.map[i][j] = this.GREEN;
+                                    break;
+                                case this.RED:
+                                    this.map[i][j] = this.RED;
+                                    break;
+                                case this.BLUE:
+                                    this.map[i][j] = this.BLUE;
+                                    break;
+                                case this.WHITE:
+                                    this.map[i][j] = this.WHITE;
+                                    break;
+                                case this.GRAY:
+                                    this.map[i][j] = this.GRAY;
+                                    break;
+                            }
+                        }
+                    }
+                } else {
+                    for(let i = 0; i < 5; i++) {
+                        this.map[i] = []
+                        for (let j=  0; j < 5; j++) {
+                            this.map[i][j] = this.GRAY;
+                        }
                     }
                 }
                 this.north = (x, y, p) => {
@@ -136,7 +161,7 @@
                 }
                 this.NE = (x, y, p) => {
                     return [y - p, x + p];
-                }	
+                }   
                 this.NW = (x, y, p) => {
                     return [y - p, x - p];
                 }
@@ -162,9 +187,9 @@
                 }
                 // clicks.
                 for (let i in list) {
-                	console.log(i);
+                    console.log(i);
                     this.onClick(list[i]);
-               	}
+                }
                this.countMap();
 
             }
@@ -243,7 +268,7 @@
             * This method serach same state's color.
             */
             supplement() {
-            	this.reset()
+                this.reset()
                 for (let i = 0; i  < 5; i++) {
                     for (let j = 0; j < 5; j++) {
                         if (this.map[i][j] === this.state) {
@@ -258,57 +283,58 @@
             * This method serachs where can be put.
             */
             supplementZero() {
-            	for (let i = 0; i  < 5; i++) {
-                	for (let j = 0; j < 5; j++) { // <- Look for all map.
-                		if (this.map[i][j] != this.GRAY 
-                			|| (i === 0 && j ===0)
-                			|| (i === 4 && j === 4)
-                			|| (i === 0 && j === 4)
-                			|| (i === 4 && j === 0)) continue; 
-                    	breakPoint:
-                    	for (let index of this.direction) {
-                    		let points = index(j, i, 1);
-                    		if (!judge(points[0], points[1])) continue;
-                    		if (this.map[points[0]][points[1]] != this.GRAY) {
-                    			 this.supplementResults.push([i, j]);
-                    			 break breakPoint;
-                    		}
+                for (let i = 0; i  < 5; i++) {
+                    for (let j = 0; j < 5; j++) { // <- Look for all map.
+                        if (this.map[i][j] != this.GRAY 
+                            || (i === 0 && j ===0)
+                            || (i === 4 && j === 4)
+                            || (i === 0 && j === 4)
+                            || (i === 4 && j === 0)) continue; 
+                        breakPoint:
+                        for (let index of this.direction) {
+                            let points = index(j, i, 1);
+                            if (!judge(points[0], points[1])) continue;
+                            if (this.map[points[0]][points[1]] != this.GRAY) {
+                                 this.supplementResults.push([i, j]);
+                                 break breakPoint;
+                            }
 
-                    	}
-                	}
-            	}
+                        }
+                    }
+                }
             }
             /**
             * Supplement Search function.
             * You can see panel that can put.
             */
             supplementSearch() {
-            	if (this.supplementList.length === 0) {
-            		this.supplementZero()
-            	} else {
-	                for (let item of this.supplementList) {
-	                    let x = item[0];
-	                    let y = item[1];
-	                    for (let i = 0; i < this.direction.length; i++) {  // 方向を決める
-	                        let insidePoints = this.direction[i](x, y, 1);
-	                        if (!judge(insidePoints[0], insidePoints[1]) 
-	                        	|| this.map[insidePoints[0]][insidePoints[1]] === this.GRAY 
-	                        	|| this.map[insidePoints[0]][insidePoints[1]] === this.state) continue;	
-	                        for (let j = 2; j < 5; j++) { // 決まっている方向を探索し続ける。
-	                            let points = this.direction[i](x, y, j);
-	                            if (!judge(points[0], points[1])) continue;
-	                            if (this.map[points[0]][points[1]] === this.state) break;
-	                            if (this.map[points[0]][points[1]] === this.GRAY) {
-	                                this.supplementResults.push([points[0], points[1]]);
-	                                break;
-	                            } else break;
-	                        }
-	                    }   
-	                }
-           		}
-           		if (this.supplementResults.length === 0) {
-           			this.supplementZero();
-           		}
+                if (this.supplementList.length === 0) {
+                    this.supplementZero();
+                } else {
+                    for (let item of this.supplementList) {
+                        let x = item[0];
+                        let y = item[1];
+                        for (let i = 0; i < this.direction.length; i++) {  // 方向を決める
+                            let insidePoints = this.direction[i](x, y, 1);
+                            if (!judge(insidePoints[0], insidePoints[1]) 
+                                || this.map[insidePoints[0]][insidePoints[1]] === this.GRAY 
+                                || this.map[insidePoints[0]][insidePoints[1]] === this.state) continue; 
+                            
+                            for (let j = 2; j < 5; j++) { // 決まっている方向を探索し続ける。
+                                let points = this.direction[i](x, y, j);
+                                if (!judge(points[0], points[1])) continue;
+                                if (this.map[points[0]][points[1]] === this.state) break;
+                                if (this.map[points[0]][points[1]] === this.GRAY) {
+                                    this.supplementResults.push([points[0], points[1]]);
+                                    break;
+                                } else continue;
+                            }
+                        }   
+                    }
+                }
+                if (this.supplementResults.length === 0) {
+                    this.supplementZero();
+                }
 
             }
             /**
@@ -332,7 +358,7 @@
 
             countMap() {
                 Object.keys(this.count).forEach((v)=>{
-                	this.count[v] = 0
+                    this.count[v] = 0
                 })
                 this.map.forEach((i)=>{
                     i.forEach((j)=>{
@@ -348,20 +374,26 @@
                 $("#white_count").text(this.count.white)
             }
         }
-        var panel = new PanelsMap();
-        $("#chance").on("click",()=>{
-            // panel.chance();
-        })
-        $(".panel").click(function(){
-            panel.supplementSet(panel.COLOR.GRAY);
-            panel.onClick(this.id);
+        let turn = 0;
+        var mapList = [new PanelsMap([])];
+        $(".panel").click(function() {
+            turn++;
+            mapList[turn - 1].supplementSet(mapList[turn - 1].COLOR.GRAY);
+            mapList[turn - 1].onClick(this.id);
+            
+            mapList[turn] = new PanelsMap(mapList[turn - 1].map);
+            for (let item of mapList) {
+                console.log(item.map);
+            }
+           
         });
+
         $(".setPanel").click(function() {
             
-            panel.supplementSet(panel.COLOR.GRAY);
-            panel.reset();
+            mapList[turn].supplementSet(mapList[turn].COLOR.GRAY);
+            mapList[turn].reset();
             const col = $(this).css("background-color").match(/^rgba\((\d+),\s*(\d+),\s*(\d+),\s*(\d+).\s*(\d+)\)$/)
-            $(".setPanel").each((i,v)=>{
+            $(".setmapList[turn]").each((i,v)=>{
                 let v_col = $(v).css("background-color").match(/^rgba\((\d+),\s*(\d+),\s*(\d+),\s*(\d+).\s*(\d+)\)$/)
                 if(this.id != v.id) $(v).css({ 
                     "background-color":"rgba("+v_col[1]+","+v_col[2]+","+v_col[3]+",0.3)",
@@ -372,46 +404,52 @@
                 "background-color":"rgba("+col[1]+","+col[2]+","+col[3]+",0.9)",
                 "border":"solid 5px #222222"
             });
-            panel.sw = false;
+            mapList[turn].sw = false;
             switch(this.id) {
                 case 'red':
-                    panel.color = panel.COLOR.RED;
-                    panel.state = panel.RED;
+                    mapList[turn].color = mapList[turn].COLOR.RED;
+                    mapList[turn].state = mapList[turn].RED;
                     break;
                 case 'blue':
-                    panel.color = panel.COLOR.BLUE;
-                    panel.state = panel.BLUE;
+                    mapList[turn].color = mapList[turn].COLOR.BLUE;
+                    mapList[turn].state = mapList[turn].BLUE;
                     break;
                 case 'white':
-                    panel.color = panel.COLOR.WHITE;
-                    panel.state = panel.WHITE;
+                    mapList[turn].color = mapList[turn].COLOR.WHITE;
+                    mapList[turn].state = mapList[turn].WHITE;
                     break;
                 case 'green':
-                    panel.color = panel.COLOR.GREEN;
-                    panel.state = panel.GREEN;
+                    mapList[turn].color = mapList[turn].COLOR.GREEN;
+                    mapList[turn].state = mapList[turn].GREEN;
                     break;
                 case 'yellow':
-                   panel.chance();
-                   panel.sw = true;
+                   mapList[turn].chance();
+                   mapList[turn].sw = true;
                    break;
                 case 'gray':
-                    panel.color = panel.COLOR.GRAY;
-                    panel.state = panel.GRAY;
+                    mapList[turn].color = mapList[turn].COLOR.GRAY;
+                    mapList[turn].state = mapList[turn].GRAY;
                     break;
             }
-            if (!panel.sw) {
-            	if (panel.map[2][2] === panel.GRAY) {
-	                panel.supplementResults = [[2,2]];
-	            } else {
-	                panel.supplement();
-	                panel.supplementSearch();
-	            }
-	            panel.supplementSet(panel.COLOR.YELLOW);
-	        }else {
-	        	 panel.supplementSet(panel.COLOR.GRAY);
-	        }
+            if (!mapList[turn].sw) {
+                if (mapList[turn].map[2][2] === mapList[turn].GRAY) {
+                    mapList[turn].supplementResults = [[2,2]];
+                } else {
+                    mapList[turn].supplement();
+                    mapList[turn].supplementSearch();
+                }
+                mapList[turn].supplementSet(mapList[turn].COLOR.YELLOW);
+            }else {
+                 mapList[turn].supplementSet(mapList[turn].COLOR.GRAY);
+            }
         });
+    function back() {
+        console.log(mapList[turn -= 2].map);
+        mapList.pop();
+        mapList.pop();
+        mapList[turn++] = new PanelsMap(mapList[turn - 1].map);
 
+    }
     </script>
     <style>
         body {
