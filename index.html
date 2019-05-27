@@ -164,8 +164,8 @@
 
             }
             /**
-            * click listener method.
-            * This method runs reverse map, count map and rest values. 
+            * Click Listener method.
+            * This method runs to reverse map, count map and rest values. 
             * @param id panel's id .
             */
             onClick(id) {
@@ -176,8 +176,8 @@
                 this.reset();
             }
             /**
-            * reverse map function.
-            * This method runs reverse map panels after search same panels. 
+            * Reverse Map function.
+            * This method runs to reverse map panels after to search same panels. 
             * @param x map's x point.
             * @param y map's y point.
             */
@@ -195,7 +195,7 @@
                 }
             }
             /**
-            * set color to map function.
+            * Set Color to Map function.
             * this method changes a panel color.
             */
             setMap(x, y, id) {
@@ -204,8 +204,8 @@
                 target.style.backgroundColor = this.color; 
             }
             /**
-            * reset any value function
-            * This method reset answer for direction values, supplement's values. 
+            * Reset Any Values function
+            * This method resets answer for direction values, supplement's values. 
             */
             reset() {
                 this.ans = [false, false, false, false, false, false, false, false];
@@ -213,7 +213,7 @@
                 this.supplementResults = [];
             }
             /**
-            * search directions what is  same color panel on map.
+            * Search Directions that is  Same State's Color Panel on Map.
             * @param x map's x point.
             * @param y map's y point.
             */
@@ -232,7 +232,7 @@
                 }   
             }
             /**
-            * supplement function
+            * Supplement function
             * I do not know about supplement word well.
             * Im so sorry. manji.
             * This method serach same state's color.
@@ -249,8 +249,8 @@
                 }
             }
             /**
-            * suppplement for same state's color function when is same state's panel zero.
-            * This method serach where can be put.
+            * Supplement for Same State's Color function when is Same State's Panel Zero.
+            * This method serachs where can be put.
             */
             supplementZero() {
             	for (let i = 0; i  < 5; i++) {
@@ -274,7 +274,7 @@
             	}
             }
             /**
-            * supplement search function.
+            * Supplement Search function.
             * You can see panel that can put.
             */
             supplementSearch() {
@@ -307,7 +307,7 @@
 
             }
             /**
-            * run supplement function.
+            * Run Supplement function.
             * This method sets yellow panel on map. 
             */
             supplementSet(color) {
@@ -321,7 +321,7 @@
                 
             }
             /**
-            * logic for map funciton.
+            * Logic for Map funciton.
             */
             judge(x, y) {
                 if (x < 0 || y < 0|| x > 4 || y > 4) return false;
