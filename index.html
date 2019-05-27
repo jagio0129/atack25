@@ -105,6 +105,7 @@
                 this.GREEN = 4;
                 this.YELLOW = 5;
                 this.GRAY = -1;
+                this.sw = false;
                 this.reset();
                 console.log("include jquery");
                 this.state = 0;
@@ -130,7 +131,7 @@
                 }
                 this.NE = (x, y, p) => {
                     return [y - p, x + p];
-                }
+                }	
                 this.NW = (x, y, p) => {
                     return [y - p, x - p];
                 }
@@ -324,6 +325,7 @@
                 "background-color":"rgba("+col[1]+","+col[2]+","+col[3]+",0.9)",
                 "border":"solid 5px #222222"
             });
+            panel.sw = false;
             switch(this.id) {
                 case 'red':
                     panel.color = panel.COLOR.RED;
@@ -343,14 +345,14 @@
                     break;
                 case 'yellow':
                    panel.chance();
-                   panel.state = -2;
+                   panel.sw = true;
                    break;
                 case 'gray':
                     panel.color = panel.COLOR.GRAY;
                     panel.state = panel.GRAY;
                     break;
             }
-            if (panel.state != -2) {
+            if (!panel.sw) {
             	if (panel.map[2][2] === panel.GRAY) {
 	                panel.supplementResults = [[2,2]];
 	            } else {
