@@ -143,15 +143,19 @@
                 }
                 this.direction = [this.north, this.south, this.west, this.east, this.NE, this.NW, this.SE,  this.SW,  ]
             }
+            /**
+            * Attack Chance function.
+            * This method clicks map three times.
+            */
             chance() {
                 let list = []
                 let num1;
-                while (true) {
-                    if (list.length >= 3) break;
+                while (list.length  < 3) { 
                     num1 = parseInt(Math.random() * 25 + 1);
                     if (contains(num1, list)) continue;
                     list.push(num1);
                 }
+                // clicks.
                 for (let i in list) {
                 	console.log(i);
                     this.onClick(list[i]);
@@ -159,6 +163,11 @@
                this.countMap();
 
             }
+            /**
+            * click listener method.
+            * This method runs reverse map, count map and rest values. 
+            * @param id panel's id .
+            */
             onClick(id) {
                 var temp = [(id - 1) % 5, (id - 1) / 5];
                 this.setMap(parseInt(temp[0]), parseInt(temp[1]), id);
@@ -166,9 +175,15 @@
                 this.countMap();
                 this.reset();
             }
+            /**
+            * reverse map function.
+            * This method runs reverse map panels after search same panels. 
+            * @param x map's x point.
+            * @param y map's y point.
+            */
             reverseMap(x, y) {
                 if (this.state === this.GRAY) return ; 
-                
+                // serach same calor panel on map.
                 this.search(x, y);
                 for (let i = 0; i < this.ans.length; i++) {
                     if (!this.ans[i]) continue;
@@ -179,20 +194,33 @@
                     }
                 }
             }
+            /**
+            * set color to map function.
+            * this method changes a panel color.
+            */
             setMap(x, y, id) {
                 this.map[y][x] = this.state;
                 let target = document.getElementById(id);
                 target.style.backgroundColor = this.color; 
             }
+            /**
+            * reset any value function
+            * This method reset answer for direction values, supplement's values. 
+            */
             reset() {
                 this.ans = [false, false, false, false, false, false, false, false];
                 this.supplementList = [];
                 this.supplementResults = [];
             }
+            /**
+            * search directions what is  same color panel on map.
+            * @param x map's x point.
+            * @param y map's y point.
+            */
             search(x, y) {
                 for (let i = 0; i < this.direction.length; i++) {
                     for(let j = 1; j < 5; j++) {
-                        let points = this.direction[i](x, y, j);
+                        let points = this.direction[i](x, y, j); // Dicide direction.
                         if(this.judge(points[0], points[1])) {
                             if (this.map[points[0]][points[1]] === this.GRAY) break;
                             if (this.map[points[0]][points[1]] === this.state) {
@@ -203,7 +231,12 @@
                     }
                 }   
             }
-
+            /**
+            * supplement function
+            * I do not know about supplement word well.
+            * Im so sorry. manji.
+            * This method serach same state's color.
+            */
             supplement() {
             	this.reset()
                 for (let i = 0; i  < 5; i++) {
@@ -215,9 +248,13 @@
                     }
                 }
             }
+            /**
+            * suppplement for same state's color function when is same state's panel zero.
+            * This method serach where can be put.
+            */
             supplementZero() {
             	for (let i = 0; i  < 5; i++) {
-                	for (let j = 0; j < 5; j++) { // <- 全パネルを見る
+                	for (let j = 0; j < 5; j++) { // <- Look for all map.
                 		if (this.map[i][j] != this.GRAY 
                 			|| (i === 0 && j ===0)
                 			|| (i === 4 && j === 4)
@@ -236,6 +273,10 @@
                 	}
             	}
             }
+            /**
+            * supplement search function.
+            * You can see panel that can put.
+            */
             supplementSearch() {
             	if (this.supplementList.length === 0) {
             		this.supplementZero()
@@ -265,6 +306,10 @@
            		}
 
             }
+            /**
+            * run supplement function.
+            * This method sets yellow panel on map. 
+            */
             supplementSet(color) {
                 for (let item of this.supplementResults) {
                     let x = item[1];
@@ -275,6 +320,9 @@
                 }
                 
             }
+            /**
+            * logic for map funciton.
+            */
             judge(x, y) {
                 if (x < 0 || y < 0|| x > 4 || y > 4) return false;
                 else return true;
