@@ -153,12 +153,11 @@
                 }
                 for (let i in list) {
                     this.onClick(list[i]);
-                }
-               
+               	}
+               this.countMap();
 
             }
             onClick(id) {
-                id = parseInt(id);
                 var temp = [(id - 1) % 5, (id - 1) / 5];
                 this.setMap(parseInt(temp[0]), parseInt(temp[1]), id);
                 this.reverseMap(parseInt(temp[0]), parseInt(temp[1]));
