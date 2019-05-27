@@ -80,6 +80,11 @@
             }
             return false;
         }
+        const judge = (x, y) => {
+            if (x < 0 || y < 0|| x > 4 || y > 4) return false;
+            else return true;
+        }
+
         class Color {
             constructor() {
                 this.RED = "#E91E63";
@@ -221,7 +226,7 @@
                 for (let i = 0; i < this.direction.length; i++) {
                     for(let j = 1; j < 5; j++) {
                         let points = this.direction[i](x, y, j); // Dicide direction.
-                        if(this.judge(points[0], points[1])) {
+                        if(judge(points[0], points[1])) {
                             if (this.map[points[0]][points[1]] === this.GRAY) break;
                             if (this.map[points[0]][points[1]] === this.state) {
                                 this.ans[i] = true;
@@ -263,7 +268,7 @@
                     	breakPoint:
                     	for (let index of this.direction) {
                     		let points = index(j, i, 1);
-                    		if (!this.judge(points[0], points[1])) continue;
+                    		if (!judge(points[0], points[1])) continue;
                     		if (this.map[points[0]][points[1]] != this.GRAY) {
                     			 this.supplementResults.push([i, j]);
                     			 break breakPoint;
@@ -286,12 +291,12 @@
 	                    let y = item[1];
 	                    for (let i = 0; i < this.direction.length; i++) {  // 方向を決める
 	                        let insidePoints = this.direction[i](x, y, 1);
-	                        if (!this.judge(insidePoints[0], insidePoints[1]) 
+	                        if (!judge(insidePoints[0], insidePoints[1]) 
 	                        	|| this.map[insidePoints[0]][insidePoints[1]] === this.GRAY 
 	                        	|| this.map[insidePoints[0]][insidePoints[1]] === this.state) continue;	
 	                        for (let j = 2; j < 5; j++) { // 決まっている方向を探索し続ける。
 	                            let points = this.direction[i](x, y, j);
-	                            if (!this.judge(points[0], points[1])) continue;
+	                            if (!judge(points[0], points[1])) continue;
 	                            if (this.map[points[0]][points[1]] === this.state) break;
 	                            if (this.map[points[0]][points[1]] === this.GRAY) {
 	                                this.supplementResults.push([points[0], points[1]]);
@@ -320,14 +325,7 @@
                 }
                 
             }
-            /**
-            * Logic for Map funciton.
-            */
-            judge(x, y) {
-                if (x < 0 || y < 0|| x > 4 || y > 4) return false;
-                else return true;
-            }
-
+           
 
 
 
