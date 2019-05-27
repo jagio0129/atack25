@@ -54,28 +54,24 @@
         <table style="margin-top: 10px; width: 25%; display: inline-block;" >
             <tbody>
                 <tr>
-                    <td id="red" class="setPanel" style="background-color: rgba(233, 30, 99, 0.9)"><span class="count_text" id="red_count">0</span></td>
+                    <td id="red" class="setPanel" style="background-color: rgba(233, 30, 99, 0.3)"><span class="count_text" id="red_count">0</span></td>
+                    <td id="yellow" class="setPanel" style="background-color: rgba(255, 255, 0, 0.9)">AC</td>
                 </tr>
                 <tr>
-                    <td id="white" class="setPanel" style="background-color: rgba(255, 255, 255, 0.9)"><span class="count_text" id="white_count">0</span></td>
+                    <td id="white" class="setPanel" style="background-color: rgba(255, 255, 255, 0.3)"><span class="count_text" id="white_count">0</span></td>
                 </tr>
                 <tr>
-                    <td id="green" class="setPanel" style="background-color: rgba(46, 125, 50, 0.9)"><span class="count_text" id="green_count">0</span></td>
+                    <td id="green" class="setPanel" style="background-color: rgba(46, 125, 50, 0.3)"><span class="count_text" id="green_count">0</span></td>
                 </tr>
                 <tr>
-                    <td id="blue" class="setPanel" style="background-color: rgba(48, 79, 254, 0.9)"><span class="count_text" id="blue_count">0</span></td>
+                    <td id="blue" class="setPanel" style="background-color: rgba(48, 79, 254, 0.3)"><span class="count_text" id="blue_count">0</span></td>
                 </tr>
-            </tr>
+                <tr>
+	                <td id="gray" class="setPanel" style="background-color: rgba(172, 172, 172, 0.9)"></td>
+	            </tr>
             </tbody>
-        </table style="display: inline-block;">
-         <table class="select_panel" style="margin-top: 10px;" align="center">
-            <tr>
-                <td id="gray" class="setPanel" style="background-color: rgba(172, 172, 172, 0.9)"></td>
-            </tr>
-            <tr>
-                <td id="yellow" class="setPanel" style="background-color: rgba(255, 255, 0, 0.9)"></td>
-            </tr>
         </table>
+
     </main>
     <script>
         const contains = (num, list) => {
@@ -207,35 +203,66 @@
                 }   
             }
 
-            supplement(x, y) {
+            supplement() {
+            	this.reset()
                 for (let i = 0; i  < 5; i++) {
                     for (let j = 0; j < 5; j++) {
-                        if (this.map[i][j] == this.state) {
+                        if (this.map[i][j] === this.state) {
                             this.supplementList.push([j, i]);
                             continue;
                         }
                     }
                 }
             }
+            supplementZero() {
+            	for (let i = 0; i  < 5; i++) {
+                	for (let j = 0; j < 5; j++) { // <- 全パネルを見る
+                		if (this.map[i][j] != this.GRAY 
+                			|| (i === 0 && j ===0)
+                			|| (i === 4 && j === 4)
+                			|| (i === 0 && j === 4)
+                			|| (i === 4 && j === 0)) continue; 
+                    	breakPoint:
+                    	for (let index of this.direction) {
+                    		let points = index(j, i, 1);
+                    		if (!this.judge(points[0], points[1])) continue;
+                    		if (this.map[points[0]][points[1]] != this.GRAY) {
+                    			 this.supplementResults.push([i, j]);
+                    			 break breakPoint;
+                    		}
+
+                    	}
+                	}
+            	}
+            }
             supplementSearch() {
-                for (let item of this.supplementList) {
-                    let x = item[0];
-                    let y = item[1];
-                     for (let i = 0; i < this.direction.length; i++) {
-                        let insidePoints = this.direction[i](x, y, 1);
-                        if (!this.judge(insidePoints[0], insidePoints[1]))continue;
-                        if (this.map[insidePoints[0]][insidePoints[1]] === this.GRAY) continue;
-                        for(let j = 2; j < 5; j++) {
-                            let points = this.direction[i](x, y, j);
-                            if(this.judge(points[0], points[1])) {
-                                if (this.map[points[0]][points[1]] === this.GRAY) {
-                                    this.supplementResults.push([points[0], points[1]]);
-                                    break;
-                                }
-                            } else break;
-                        }
-                    }   
-                }
+            	if (this.supplementList.length === 0) {
+            		this.supplementZero()
+            	} else {
+	                for (let item of this.supplementList) {
+	                    let x = item[0];
+	                    let y = item[1];
+	                    for (let i = 0; i < this.direction.length; i++) {  // 方向を決める
+	                        let insidePoints = this.direction[i](x, y, 1);
+	                        if (!this.judge(insidePoints[0], insidePoints[1]) 
+	                        	|| this.map[insidePoints[0]][insidePoints[1]] === this.GRAY 
+	                        	|| this.map[insidePoints[0]][insidePoints[1]] === this.state) continue;	
+	                        for (let j = 2; j < 5; j++) { // 決まっている方向を探索し続ける。
+	                            let points = this.direction[i](x, y, j);
+	                            if (!this.judge(points[0], points[1])) continue;
+	                            if (this.map[points[0]][points[1]] === this.state) break;
+	                            if (this.map[points[0]][points[1]] === this.GRAY) {
+	                                this.supplementResults.push([points[0], points[1]]);
+	                                break;
+	                            } else break;
+	                        }
+	                    }   
+	                }
+           		}
+           		if (this.supplementResults.length === 0) {
+           			this.supplementZero();
+           		}
+
             }
             supplementSet(color) {
                 for (let item of this.supplementResults) {
@@ -257,13 +284,15 @@
 
 
             countMap() {
-                Object.keys(this.count).forEach((v)=>{this.count[v] = 0})
+                Object.keys(this.count).forEach((v)=>{
+                	this.count[v] = 0
+                })
                 this.map.forEach((i)=>{
                     i.forEach((j)=>{
-                        this.count.red   = j == this.red ? this.count.red + 1: this.count.red
-                        this.count.blue  = j == this.blue ? this.count.blue + 1: this.count.blue
-                        this.count.white = j == this.white ? this.count.white + 1: this.count.white
-                        this.count.green = j == this.green ? this.count.green + 1: this.count.green
+                        this.count.red   = j === this.RED ? this.count.red + 1: this.count.red
+                        this.count.blue  = j === this.BLUE ? this.count.blue + 1: this.count.blue
+                        this.count.white = j === this.WHITE ? this.count.white + 1: this.count.white
+                        this.count.green = j === this.GREEN ? this.count.green + 1: this.count.green
                     })
                 })
                 $("#red_count").text(this.count.red)
@@ -284,10 +313,6 @@
             
             panel.supplementSet(panel.COLOR.GRAY);
             panel.reset();
-            $(".setPanel").css({
-                opacity: 0.3,
-                border: "none"
-            });
             const col = $(this).css("background-color").match(/^rgba\((\d+),\s*(\d+),\s*(\d+),\s*(\d+).\s*(\d+)\)$/)
             $(".setPanel").each((i,v)=>{
                 let v_col = $(v).css("background-color").match(/^rgba\((\d+),\s*(\d+),\s*(\d+),\s*(\d+).\s*(\d+)\)$/)
@@ -318,22 +343,25 @@
                     panel.state = panel.GREEN;
                     break;
                 case 'yellow':
-                    panel.color = panel.COLOR.YELLOW;
-                    panel.state = panel.YELLOW;
-                    break;
+                   panel.chance();
+                   panel.state = -2;
+                   break;
                 case 'gray':
                     panel.color = panel.COLOR.GRAY;
                     panel.state = panel.GRAY;
                     break;
             }
-            if (panel.map[2][2] === panel.GRAY) {
-                panel.supplementResults = [[2,2]];
-            } else {
-                panel.supplement(2, 2);
-                panel.supplementSearch();
-            }
-            panel.supplementSet(panel.COLOR.YELLOW);
-
+            if (panel.state != -2) {
+            	if (panel.map[2][2] === panel.GRAY) {
+	                panel.supplementResults = [[2,2]];
+	            } else {
+	                panel.supplement();
+	                panel.supplementSearch();
+	            }
+	            panel.supplementSet(panel.COLOR.YELLOW);
+	        }else {
+	        	 panel.supplementSet(panel.COLOR.GRAY);
+	        }
         });
 
     </script>
@@ -351,9 +379,6 @@
             height:180px;
             background-color: #ACACAC;
             cursor: pointer;
-        }
-        .setPanel {
-            opacity: 0.3;
         }
     </style>
 </body>
