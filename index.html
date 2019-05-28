@@ -12,100 +12,139 @@
 </head>
 <body>
     <main>
-        <table align="center">
-            <tr>
-                <td id="1" class="panel">1</td>
-                <td id="2" class="panel">2</td>
-                <td id="3" class="panel">3</td>
-                <td id="4" class="panel">4</td>
-                <td id="5" class="panel">5</td>
-            </tr>
-            <tr>
-                <td id="6" class="panel">6</td>
-                <td id="7" class="panel">7</td>
-                <td id="8" class="panel">8</td>
-                <td id="9" class="panel">9</td>
-                <td id="10" class="panel">10</td>
-            </tr>
-            <tr>
-                <td id="11" class="panel">11</td>
-                <td id="12" class="panel">12</td>
-                <td id="13" class="panel">13</td>
-                <td id="14" class="panel">14</td>
-                <td id="15" class="panel">15</td>
-            </tr>
-            <tr>
-                <td id="16" class="panel">16</td>
-                <td id="17" class="panel">17</td>
-                <td id="18" class="panel">18</td>
-                <td id="19" class="panel">19</td>
-                <td id="20" class="panel">20</td>
-            </tr>
-            <tr>
-                <td id="21" class="panel">21</td>
-                <td id="22" class="panel">22</td>
-                <td id="23" class="panel">23</td>
-                <td id="24" class="panel">24</td>
-                <td id="25" class="panel">25</td>
-            </tr>
+        <table style="margin-top: 10px;  width: 50%; display: inline-block; padding-left:  20%; ">
+            <tbody>
+                <tr>
+                    <td id="1" class="panel">1</td>
+                    <td id="2" class="panel">2</td>
+                    <td id="3" class="panel">3</td>
+                    <td id="4" class="panel">4</td>
+                    <td id="5" class="panel">5</td>
+                </tr>
+                <tr>
+                    <td id="6" class="panel">6</td>
+                    <td id="7" class="panel">7</td>
+                    <td id="8" class="panel">8</td>
+                    <td id="9" class="panel">9</td>
+                    <td id="10" class="panel">10</td>
+                </tr>
+                <tr>
+                    <td id="11" class="panel">11</td>
+                    <td id="12" class="panel">12</td>
+                    <td id="13" class="panel">13</td>
+                    <td id="14" class="panel">14</td>
+                    <td id="15" class="panel">15</td>
+                </tr>
+                <tr>
+                    <td id="16" class="panel">16</td>
+                    <td id="17" class="panel">17</td>
+                    <td id="18" class="panel">18</td>
+                    <td id="19" class="panel">19</td>
+                    <td id="20" class="panel">20</td>
+                </tr>
+                <tr>
+                    <td id="21" class="panel">21</td>
+                    <td id="22" class="panel">22</td>
+                    <td id="23" class="panel">23</td>
+                    <td id="24" class="panel">24</td>
+                    <td id="25" class="panel">25</td>
+                </tr>
+            </tbody>
         </table>
-        <table class="select_panel" style="margin-top: 10px;" align="center">
-            <tr>
-                <td id="red" class="setPanel" style="background-color: rgba(233, 30, 99, 0.9)"><span class="count_text" id="red_count">0</span></td>
-                <td id="white" class="setPanel" style="background-color: rgba(255, 255, 255, 0.9)"><span class="count_text" id="white_count">0</span></td>
-                <td id="green" class="setPanel" style="background-color: rgba(46, 125, 50, 0.9)"><span class="count_text" id="green_count">0</span></td>
-                <td id="blue" class="setPanel" style="background-color: rgba(48, 79, 254, 0.9)"><span class="count_text" id="blue_count">0</span></td>
-            </tr>
+        <table style="margin-top: 10px; width: 25%; display: inline-block;" >
+            <tbody>
+                <tr>
+                    <td id="red" class="setPanel" style="background-color: rgba(233, 30, 99, 0.3)"><span class="count_text" id="red_count">0</span></td>
+                    <td id="yellow" class="setPanel" style="background-color: rgba(255, 255, 0, 0.9)">AC</td>
+                </tr>
+                <tr>
+                    <td id="white" class="setPanel" style="background-color: rgba(255, 255, 255, 0.3)"><span class="count_text" id="white_count">0</span></td>
+                </tr>
+                <tr>
+                    <td id="green" class="setPanel" style="background-color: rgba(46, 125, 50, 0.3)"><span class="count_text" id="green_count">0</span></td>
+                </tr>
+                <tr>
+                    <td id="blue" class="setPanel" style="background-color: rgba(48, 79, 254, 0.3)"><span class="count_text" id="blue_count">0</span></td>
+                </tr>
+                <tr>
+                    <td id="gray" class="setPanel" style="background-color: rgba(172, 172, 172, 0.9)"></td>
+                </tr>
+            </tbody>
         </table>
-        <table class="select_panel" style="margin-top: 10px;" align="center">
-            <tr>
-                <td id="gray" class="setPanel" style="background-color: rgba(172, 172, 172, 0.9)"></td>
-                <td id="yellow" class="setPanel" style="background-color: rgba(255, 255, 0, 0.9)"></td>
-            </tr>
-        </table>
+
     </main>
     <script>
+        const contains = (num, list) => {
+            for (item of list)  {
+                if (num === item) return true;
+            }
+            return false;
+        }
+        const judge = (x, y) => {
+            if (x < 0 || y < 0|| x > 4 || y > 4) return false;
+            else return true;
+        }
+
         class Color {
             constructor() {
                 this.RED = "#E91E63";
                 this.BLUE = "#304FFE";
                 this.WHITE = "#FFFFFF";
                 this.GREEN = "#2E7D32";
+                this.YELLOW = "#FFFF33";
                 this.GRAY =  "#ACACAC";
-                this.YELLOW = "#FFFF00";
             }
         }
-        class Panel {
-            constructor() {
+        class PanelsMap {
+            constructor(map) {
                 this.COLOR = new Color();
                 this.count = {
-                    RED:0,
-                    BLUE:0,
-                    WHITE:0,
-                    GREEN:0
+                    red:0,
+                    blue:0,
+                    white: 0,
+                    green:0
                 }
                 this.RED = 1;
                 this.BLUE = 2;
                 this.WHITE = 3;
                 this.GREEN = 4;
-                this.GRAY = 5;
                 this.YELLOW = 5;
-                this.SOUTH = 1;
-                this.WEST = 2;
-                this.EAST = 3;
-                this.NE = 4;
-                this.NW = 5;
-                this.SE = 6;
-                this.SW = 7;
+                this.GRAY = -1;
+                this.sw = false;
                 this.reset();
                 console.log("include jquery");
-                this.state = 0;
+                this.state = this.GRAY;
                 this.map = [];
                 this.color = "#ACACAC";
-                for(let i = 0; i < 5; i++) {
-                    this.map[i] = []
-                    for (let j=  0; j < 5; j++) {
-                        this.map[i][j] = this.GRAY;
+                if (map.length != 0) {
+                    for(let i = 0; i < 5; i++) {
+                        this.map[i] = []
+                        for (let j=  0; j < 5; j++) {
+                            switch(map[i][j]) {
+                                case this.GREEN:
+                                    this.map[i][j] = this.GREEN;
+                                    break;
+                                case this.RED:
+                                    this.map[i][j] = this.RED;
+                                    break;
+                                case this.BLUE:
+                                    this.map[i][j] = this.BLUE;
+                                    break;
+                                case this.WHITE:
+                                    this.map[i][j] = this.WHITE;
+                                    break;
+                                case this.GRAY:
+                                    this.map[i][j] = this.GRAY;
+                                    break;
+                            }
+                        }
+                    }
+                } else {
+                    for(let i = 0; i < 5; i++) {
+                        this.map[i] = []
+                        for (let j=  0; j < 5; j++) {
+                            this.map[i][j] = this.GRAY;
+                        }
                     }
                 }
                 this.north = (x, y, p) => {
@@ -122,7 +161,7 @@
                 }
                 this.NE = (x, y, p) => {
                     return [y - p, x + p];
-                }
+                }   
                 this.NW = (x, y, p) => {
                     return [y - p, x - p];
                 }
@@ -134,18 +173,47 @@
                 }
                 this.direction = [this.north, this.south, this.west, this.east, this.NE, this.NW, this.SE,  this.SW,  ]
             }
-            click(id) {
-                id = parseInt(id);
+            /**
+            * Attack Chance function.
+            * This method clicks map three times.
+            */
+            chance() {
+                let list = []
+                let num1;
+                while (list.length  < 3) { 
+                    num1 = parseInt(Math.random() * 25 + 1);
+                    if (contains(num1, list)) continue;
+                    list.push(num1);
+                }
+                // clicks.
+                for (let i in list) {
+                    console.log(i);
+                    this.onClick(list[i]);
+                }
+               this.countMap();
+
+            }
+            /**
+            * Click Listener method.
+            * This method runs to reverse map, count map and rest values. 
+            * @param id panel's id .
+            */
+            onClick(id) {
                 var temp = [(id - 1) % 5, (id - 1) / 5];
-                if (!(this.map[parseInt(temp[1])][parseInt(temp[0])] === 5 || this.state === 5)) return 
                 this.setMap(parseInt(temp[0]), parseInt(temp[1]), id);
                 this.reverseMap(parseInt(temp[0]), parseInt(temp[1]));
+                this.countMap();
                 this.reset();
-                this.countMap()
             }
+            /**
+            * Reverse Map function.
+            * This method runs to reverse map panels after to search same panels. 
+            * @param x map's x point.
+            * @param y map's y point.
+            */
             reverseMap(x, y) {
                 if (this.state === this.GRAY) return ; 
-                
+                // serach same calor panel on map.
                 this.search(x, y);
                 for (let i = 0; i < this.ans.length; i++) {
                     if (!this.ans[i]) continue;
@@ -156,21 +224,36 @@
                     }
                 }
             }
+            /**
+            * Set Color to Map function.
+            * this method changes a panel color.
+            */
             setMap(x, y, id) {
                 this.map[y][x] = this.state;
                 let target = document.getElementById(id);
                 target.style.backgroundColor = this.color; 
             }
+            /**
+            * Reset Any Values function
+            * This method resets answer for direction values, supplement's values. 
+            */
             reset() {
                 this.ans = [false, false, false, false, false, false, false, false];
+                this.supplementList = [];
+                this.supplementResults = [];
             }
+            /**
+            * Search Directions that is  Same State's Color Panel on Map.
+            * @param x map's x point.
+            * @param y map's y point.
+            */
             search(x, y) {
                 for (let i = 0; i < this.direction.length; i++) {
                     for(let j = 1; j < 5; j++) {
-                        let points = this.direction[i](x, y, j);
-                        if(this.judge(points[0], points[1])) {
+                        let points = this.direction[i](x, y, j); // Dicide direction.
+                        if(judge(points[0], points[1])) {
                             if (this.map[points[0]][points[1]] === this.GRAY) break;
-                            if(this.map[points[0]][points[1]] === this.state) {
+                            if (this.map[points[0]][points[1]] === this.state) {
                                 this.ans[i] = true;
                                 break;
                             }
@@ -178,58 +261,139 @@
                     }
                 }   
             }
-            judge(x, y) {
-                if (x < 0 || y < 0|| x > 4 || y > 4) return false;
-                else return true;
+            /**
+            * Supplement function
+            * I do not know about supplement word well.
+            * Im so sorry. manji.
+            * This method serach same state's color.
+            */
+            supplement() {
+                this.reset()
+                for (let i = 0; i  < 5; i++) {
+                    for (let j = 0; j < 5; j++) {
+                        if (this.map[i][j] === this.state) {
+                            this.supplementList.push([j, i]);
+                            continue;
+                        }
+                    }
+                }
             }
+            /**
+            * Supplement for Same State's Color function when is Same State's Panel Zero.
+            * This method serachs where can be put.
+            */
+            supplementZero() {
+                for (let i = 0; i  < 5; i++) {
+                    for (let j = 0; j < 5; j++) { // <- Look for all map.
+                        if (this.map[i][j] != this.GRAY 
+                            || (i === 0 && j ===0)
+                            || (i === 4 && j === 4)
+                            || (i === 0 && j === 4)
+                            || (i === 4 && j === 0)) continue; 
+                        breakPoint:
+                        for (let index of this.direction) {
+                            let points = index(j, i, 1);
+                            if (!judge(points[0], points[1])) continue;
+                            if (this.map[points[0]][points[1]] != this.GRAY) {
+                                 this.supplementResults.push([i, j]);
+                                 break breakPoint;
+                            }
+
+                        }
+                    }
+                }
+            }
+            /**
+            * Supplement Search function.
+            * You can see panel that can put.
+            */
+            supplementSearch() {
+                if (this.supplementList.length === 0) {
+                    this.supplementZero();
+                } else {
+                    for (let item of this.supplementList) {
+                        let x = item[0];
+                        let y = item[1];
+                        for (let i = 0; i < this.direction.length; i++) {  // 方向を決める
+                            let insidePoints = this.direction[i](x, y, 1);
+                            if (!judge(insidePoints[0], insidePoints[1]) 
+                                || this.map[insidePoints[0]][insidePoints[1]] === this.GRAY 
+                                || this.map[insidePoints[0]][insidePoints[1]] === this.state) continue; 
+                            
+                            for (let j = 2; j < 5; j++) { // 決まっている方向を探索し続ける。
+                                let points = this.direction[i](x, y, j);
+                                if (!judge(points[0], points[1])) continue;
+                                if (this.map[points[0]][points[1]] === this.state) break;
+                                if (this.map[points[0]][points[1]] === this.GRAY) {
+                                    this.supplementResults.push([points[0], points[1]]);
+                                    break;
+                                } else continue;
+                            }
+                        }   
+                    }
+                }
+                if (this.supplementResults.length === 0) {
+                    this.supplementZero();
+                }
+
+            }
+            /**
+            * Run Supplement function.
+            * This method sets yellow panel on map. 
+            */
+            supplementSet(color) {
+                for (let item of this.supplementResults) {
+                    let x = item[1];
+                    let y = item[0];
+                    let id = y * 5 + (x + 1);
+                    let target = document.getElementById(id);
+                    target.style.backgroundColor = color;
+                }
+                
+            }
+           
+
+
+
+
             countMap() {
-                Object.keys(this.count).forEach((v)=>{this.count[v] = 0})
+                Object.keys(this.count).forEach((v)=>{
+                    this.count[v] = 0
+                })
                 this.map.forEach((i)=>{
                     i.forEach((j)=>{
-                        this.count.RED   = j == this.RED ? this.count.RED + 1: this.count.RED
-                        this.count.BLUE  = j == this.BLUE ? this.count.BLUE + 1: this.count.BLUE
-                        this.count.WHITE = j == this.WHITE ? this.count.WHITE + 1: this.count.WHITE
-                        this.count.GREEN = j == this.GREEN ? this.count.GREEN + 1: this.count.GREEN
+                        this.count.red   = j === this.RED ? this.count.red + 1: this.count.red
+                        this.count.blue  = j === this.BLUE ? this.count.blue + 1: this.count.blue
+                        this.count.white = j === this.WHITE ? this.count.white + 1: this.count.white
+                        this.count.green = j === this.GREEN ? this.count.green + 1: this.count.green
                     })
                 })
-                $("#red_count").text(this.count.RED)
-                $("#blue_count").text(this.count.BLUE)
-                $("#green_count").text(this.count.GREEN)
-                $("#white_count").text(this.count.WHITE)
+                $("#red_count").text(this.count.red)
+                $("#blue_count").text(this.count.blue)
+                $("#green_count").text(this.count.green)
+                $("#white_count").text(this.count.white)
             }
         }
-        var panel = new Panel();
-        $(".panel").click(function(){
-            panel.click(this.id);
+        let turn = 0;
+        var mapList = [new PanelsMap([])];
+        $(".panel").click(function() {
+            turn++;
+            mapList[turn - 1].supplementSet(mapList[turn - 1].COLOR.GRAY);
+            mapList[turn - 1].onClick(this.id);
+            
+            mapList[turn] = new PanelsMap(mapList[turn - 1].map);
+            for (let item of mapList) {
+                console.log(item.map);
+            }
+           
         });
-        
-        $("#red").on("click",()=>{
-            panel.color = panel.COLOR.RED;
-            panel.state = panel.RED;
-        })
-        $("#blue").on("click",()=>{
-            panel.color = panel.COLOR.BLUE;
-            panel.state = panel.BLUE;
-        })
-        $("#white").on("click",()=>{
-            panel.color = panel.COLOR.WHITE;
-            panel.state = panel.WHITE;
-        })
-        $("#green").on("click",()=>{
-            panel.color = panel.COLOR.GREEN;
-            panel.state = panel.GREEN;
-        })
-        $("#gray").on("click",()=>{
-            panel.color = panel.COLOR.GRAY;
-            panel.state = panel.GRAY;
-        })
-        $("#yellow").on("click",()=>{
-            panel.color = panel.COLOR.YELLOW;
-            panel.state = panel.YELLOW;
-        })
+
         $(".setPanel").click(function() {
+            
+            mapList[turn].supplementSet(mapList[turn].COLOR.GRAY);
+            mapList[turn].reset();
             const col = $(this).css("background-color").match(/^rgba\((\d+),\s*(\d+),\s*(\d+),\s*(\d+).\s*(\d+)\)$/)
-            $(".setPanel").each((i,v)=>{
+            $(".setmapList[turn]").each((i,v)=>{
                 let v_col = $(v).css("background-color").match(/^rgba\((\d+),\s*(\d+),\s*(\d+),\s*(\d+).\s*(\d+)\)$/)
                 if(this.id != v.id) $(v).css({ 
                     "background-color":"rgba("+v_col[1]+","+v_col[2]+","+v_col[3]+",0.3)",
@@ -240,33 +404,67 @@
                 "background-color":"rgba("+col[1]+","+col[2]+","+col[3]+",0.9)",
                 "border":"solid 5px #222222"
             });
+            mapList[turn].sw = false;
+            switch(this.id) {
+                case 'red':
+                    mapList[turn].color = mapList[turn].COLOR.RED;
+                    mapList[turn].state = mapList[turn].RED;
+                    break;
+                case 'blue':
+                    mapList[turn].color = mapList[turn].COLOR.BLUE;
+                    mapList[turn].state = mapList[turn].BLUE;
+                    break;
+                case 'white':
+                    mapList[turn].color = mapList[turn].COLOR.WHITE;
+                    mapList[turn].state = mapList[turn].WHITE;
+                    break;
+                case 'green':
+                    mapList[turn].color = mapList[turn].COLOR.GREEN;
+                    mapList[turn].state = mapList[turn].GREEN;
+                    break;
+                case 'yellow':
+                   mapList[turn].chance();
+                   mapList[turn].sw = true;
+                   break;
+                case 'gray':
+                    mapList[turn].color = mapList[turn].COLOR.GRAY;
+                    mapList[turn].state = mapList[turn].GRAY;
+                    break;
+            }
+            if (!mapList[turn].sw) {
+                if (mapList[turn].map[2][2] === mapList[turn].GRAY) {
+                    mapList[turn].supplementResults = [[2,2]];
+                } else {
+                    mapList[turn].supplement();
+                    mapList[turn].supplementSearch();
+                }
+                mapList[turn].supplementSet(mapList[turn].COLOR.YELLOW);
+            }else {
+                 mapList[turn].supplementSet(mapList[turn].COLOR.GRAY);
+            }
         });
+    function back() {
+        console.log(mapList[turn -= 2].map);
+        mapList.pop();
+        mapList.pop();
+        mapList[turn++] = new PanelsMap(mapList[turn - 1].map);
 
+    }
     </script>
     <style>
-        table{
-            border-spacing: 0;
-            background: black;
+        body {
+            margin: 0;
+
         }
         td {
-            font-weight: bold;
-            border-radius: 10px;
             text-align: center;
-            font-size: 57px;
-            color: #333333;
-            border: solid 5px #000000;
-            width: 200px;
-            height: 150px;
+            font-size: 80px;
+            color: #232323;
+            border: solid 2px #000000;
+            width:200px;
+            height:180px;
             background-color: #ACACAC;
             cursor: pointer;
-            box-sizing: border-box;
-        }
-        .setPanel {
-            border: none;
-        }
-        .select_panel{
-            border-spacing: 0;
-            background: none;
         }
     </style>
 </body>
