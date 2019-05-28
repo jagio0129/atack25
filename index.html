@@ -71,7 +71,7 @@
                 </tr>
             </tbody>
         </table>
-
+        <div id="back"><p>back</p></div>
     </main>
     <script>
         const contains = (num, list) => {
@@ -83,6 +83,12 @@
         const judge = (x, y) => {
             if (x < 0 || y < 0|| x > 4 || y > 4) return false;
             else return true;
+        }
+        const stopYellow = () => {
+            $(".panel").css({
+                     animation: "",
+                    "-webkit-animation": "",
+            });
         }
 
         class Color {
@@ -112,7 +118,6 @@
                 this.GRAY = -1;
                 this.sw = false;
                 this.reset();
-                console.log("include jquery");
                 this.state = this.GRAY;
                 this.map = [];
                 this.color = "#ACACAC";
@@ -176,8 +181,10 @@
             /**
             * Attack Chance function.
             * This method clicks map three times.
+            * @return boolean if state is gray, return false and return true when is else that.
             */
             chance() {
+                if (this.state === this.GRAY) return false;
                 let list = []
                 let num1;
                 while (list.length  < 3) { 
@@ -187,10 +194,10 @@
                 }
                 // clicks.
                 for (let i in list) {
-                    console.log(i);
                     this.onClick(list[i]);
                 }
                this.countMap();
+               return true;
 
             }
             /**
@@ -203,6 +210,7 @@
                 this.setMap(parseInt(temp[0]), parseInt(temp[1]), id);
                 this.reverseMap(parseInt(temp[0]), parseInt(temp[1]));
                 this.countMap();
+                stopYellow();
                 this.reset();
             }
             /**
@@ -230,6 +238,7 @@
             */
             setMap(x, y, id) {
                 this.map[y][x] = this.state;
+                stopYellow();
                 let target = document.getElementById(id);
                 target.style.backgroundColor = this.color; 
             }
@@ -269,6 +278,7 @@
             */
             supplement() {
                 this.reset()
+                stopYellow();
                 for (let i = 0; i  < 5; i++) {
                     for (let j = 0; j < 5; j++) {
                         if (this.map[i][j] === this.state) {
@@ -342,20 +352,58 @@
             * This method sets yellow panel on map. 
             */
             supplementSet(color) {
+                if (this.state === this.GRAY) return;
                 for (let item of this.supplementResults) {
                     let x = item[1];
                     let y = item[0];
                     let id = y * 5 + (x + 1);
-                    let target = document.getElementById(id);
-                    target.style.backgroundColor = color;
+                    $("#" + id).css({
+                        animation: "bg-color 1.5s infinite",
+                        "-webkit-animation": "bg-color 1.5s infinite",
+                    });
                 }
                 
             }
-           
+            /**
+            * Confirmation Map Value function
+            * This method checks map values and make to apply panel color by map values.
+            */
+            confirmation() {
+                for (let i = 0; i < 5;  i++) {
+                    for (let j = 0 ; j < 5; j++) {
+                        switch(this.map[i][j]) {
+                            case this.GREEN:
+                                let target1 = document.getElementById( i*5 + j + 1);
+                                target1.style.backgroundColor = this.COLOR.GREEN; 
+                                break;
+                            case this.RED:
+                                let target2 = document.getElementById( i*5 + j + 1);
+                                target2.style.backgroundColor = this.COLOR.RED;
+                                break;
+                            case this.BLUE:
+                                let target3 = document.getElementById( i*5 + j + 1);
+                                target3.style.backgroundColor = this.COLOR.BLUE;
+                                break;
+                            case this.WHITE:
+                                let target4 = document.getElementById( i*5 + j + 1);
+                                target4.style.backgroundColor = this.COLOR.GREEN;
+                                break;
+                            case this.GRAY:
+                                let target5 = document.getElementById( i*5 + j + 1);
+                                target5.style.backgroundColor = this.COLOR.GRAY;
+                                break;
+                        }
+                    }
+               }
+               this.countMap();
+           }
 
 
 
-
+            /**
+            * Count Panel's Color function
+            * this method count panel'S color.
+            */
             countMap() {
                 Object.keys(this.count).forEach((v)=>{
                     this.count[v] = 0
@@ -382,10 +430,20 @@
             mapList[turn - 1].onClick(this.id);
             
             mapList[turn] = new PanelsMap(mapList[turn - 1].map);
-            for (let item of mapList) {
-                console.log(item.map);
+        });
+        $("#back").click(function() {
+            if (mapList.length > 2) {
+                mapList[turn - 1] = new PanelsMap(mapList[turn - 2].map)
+                mapList.pop();
+                turn --;
+                mapList[turn].confirmation();
+            } else {
+                turn = 0;
+                mapList = [new PanelsMap([])];
+                mapList[0].confirmation();
             }
            
+            
         });
 
         $(".setPanel").click(function() {
@@ -423,8 +481,11 @@
                     mapList[turn].state = mapList[turn].GREEN;
                     break;
                 case 'yellow':
-                   mapList[turn].chance();
-                   mapList[turn].sw = true;
+                    if (mapList[turn].chance()) {
+                        mapList[++turn] = new PanelsMap(mapList[turn - 1].map);
+                        mapList[turn].sw = true;
+                    }
+                  
                    break;
                 case 'gray':
                     mapList[turn].color = mapList[turn].COLOR.GRAY;
@@ -443,18 +504,24 @@
                  mapList[turn].supplementSet(mapList[turn].COLOR.GRAY);
             }
         });
-    function back() {
-        console.log(mapList[turn -= 2].map);
-        mapList.pop();
-        mapList.pop();
-        mapList[turn++] = new PanelsMap(mapList[turn - 1].map);
-
-    }
     </script>
     <style>
         body {
             margin: 0;
 
+        }
+        @-webkit-keyframes bg-color {
+         0% {background-color:"#ACACAC";}
+         50% {background-color: "FFFF33"}
+         70% {background-color: rgba(255, 255, 51, 0.7);}
+         70% {background-color: "#AFAFAF"}
+
+        }
+        @keyframes bg-color {
+         0% {background-color: "#ACACAC";}
+         50% {background-color: "FFFF33"}
+         70% {background-color: rgba(255, 255, 51, 0.7);}
+         70% {background-color: "#AFAFAF";}
         }
         td {
             text-align: center;
@@ -465,6 +532,22 @@
             height:180px;
             background-color: #ACACAC;
             cursor: pointer;
+        }
+        #back {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            border-radius: 50%;
+            height: 200px;
+            width: 200px;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: -webkit-flex;
+            text-align: center;
+        }
+        #back > p {
+            font-size: 30px;
+            padding-top: 25%;
+            margin-left: 33%;
         }
     </style>
 </body>
