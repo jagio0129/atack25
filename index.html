@@ -187,7 +187,7 @@
                 if (this.state === this.GRAY) return false;
                 let list = []
                 let num1;
-                while (list.length  < 3) { 
+                while (list.length  < 2) { 
                     num1 = parseInt(Math.random() * 25 + 1);
                     if (contains(num1, list)) continue;
                     list.push(num1);
@@ -344,6 +344,20 @@
                 }
                 if (this.supplementResults.length === 0) {
                     this.supplementZero();
+                }
+                if (this.supplementResults.length === 0) {
+                	if (this.map[0][0] === this.GRAY) {
+                		this.supplementResults.push([0, 0]);
+                	}
+                	if (this.map[0][4] === this.GRAY) {
+                		this.supplementResults.push([0, 4]);
+                	}
+                	if (this.map[4][0] === this.GRAY) {
+                		this.supplementResults.push([4, 0]);
+                	}
+                	if (this.map[4][4] === this.GRAY) {
+                		this.supplementResults.push([4, 4]);
+                	}
                 }
 
             }
