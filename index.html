@@ -400,7 +400,7 @@
                                 break;
                             case this.WHITE:
                                 let target4 = document.getElementById( i*5 + j + 1);
-                                target4.style.backgroundColor = this.COLOR.GREEN;
+                                target4.style.backgroundColor = this.COLOR.WHITE;
                                 break;
                             case this.GRAY:
                                 let target5 = document.getElementById( i*5 + j + 1);
@@ -456,7 +456,7 @@
                 mapList = [new PanelsMap([])];
                 mapList[0].confirmation();
             }
-           
+           stopYellow();
             
         });
 
@@ -557,6 +557,7 @@
             background-color: rgba(0, 0, 0, 0.5);
             display: -webkit-flex;
             text-align: center;
+            cursor: pointer;
         }
         #back > p {
             font-size: 30px;
